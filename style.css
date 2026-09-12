@@ -1,436 +1,1051 @@
-* {
+/* ==========================================================================
+   PARENTS DISAPPOINTMENT CALCULATOR™
+   AESTHETIC: BOLD CHUNKY TYPOGRAPHY / MODERN NEO-BRUTALISM
+   High-contrast, oversized headlines, thick borders, hard offset shadows.
+   ========================================================================== */
+
+/* --- 1. DESIGN TOKENS & ROOT VARIABLES --- */
+:root {
+    /* Color Palette: High Contrast Warm Cream, Pitch Black, Vivid Red */
+    --bg-canvas: #f6f3eb;           /* Warm cream / off-white background */
+    --bg-canvas-subtle: #eee9dc;    /* Slightly deeper cream for contrast */
+    --bg-card: #ffffff;             /* Crisp white card surface */
+    --bg-card-alt: #fcfbf8;         /* Sub-card background */
+    --text-main: #0e0e10;           /* Pitch near-black primary text */
+    --text-muted: #52525b;          /* Secondary supporting microcopy */
+    --border-black: #0e0e10;        /* Bold near-black border */
+    
+    /* Vibrant Red Accent */
+    --accent-red: #ef4444;          /* Vivid alert red */
+    --accent-red-hover: #dc2626;    /* Deep hover red */
+    --accent-red-light: #fee2e2;    /* Soft red tint for selected / badges */
+    --accent-yellow: #fef08a;       /* Playful warning yellow */
+    --accent-green: #bbf7d0;        /* Playful positive green */
+    
+    /* Typography Tokens */
+    --font-display: 'Archivo Black', Impact, 'Arial Black', sans-serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Brutalist Strokes & Shadows */
+    --border-thick: 3px solid var(--border-black);
+    --border-medium: 2.5px solid var(--border-black);
+    --border-thin: 2px solid var(--border-black);
+    
+    --shadow-hard-lg: 6px 6px 0px var(--border-black);
+    --shadow-hard-md: 4px 4px 0px var(--border-black);
+    --shadow-hard-sm: 2.5px 2.5px 0px var(--border-black);
+    --shadow-hard-red: 4px 4px 0px var(--accent-red);
+    
+    --radius-card: 20px;
+    --radius-btn: 14px;
+    --radius-badge: 999px;
+    --radius-input: 12px;
+
+    /* Interactive Feedback */
+    --transition-fast: 0.12s ease;
+    --transition-bounce: 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- 2. GLOBAL RESET & BASE SETUP --- */
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-:root {
-    --bg: #f4f0e8;
-    --black: #111111;
-    --white: #ffffff;
-    --red: #ff3b30;
-    --yellow: #ffd60a;
-    --gray: #777777;
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--bg-canvas);
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--bg);
-    color: var(--black);
     min-height: 100vh;
-}
-
-.container {
-    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--bg-canvas);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding: clamp(16px, 4vw, 36px) clamp(12px, 3vw, 24px);
+    overflow-x: hidden;
+    line-height: 1.4;
+    
+    /* Subtle dot matrix pattern for modern brutalist aesthetic */
+    background-image: radial-gradient(var(--border-black) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
 }
 
-.screen {
-    display: none;
+/* --- 3. MAIN CARD CONTAINER --- */
+.card {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-card);
+    max-width: 680px;
     width: 100%;
-    max-width: 850px;
+    padding: clamp(28px, 5.5vw, 46px) clamp(18px, 4.5vw, 36px);
     text-align: center;
-}
-
-.screen.active {
-    display: block;
-}
-
-
-/* LANDING */
-
-.badge {
-    display: inline-block;
-    background: var(--black);
-    color: var(--white);
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
-    transform: rotate(-2deg);
-}
-
-h1 {
-    font-size: clamp(55px, 10vw, 110px);
-    line-height: 0.85;
-    font-weight: 900;
-    letter-spacing: -6px;
-}
-
-h1 span {
-    color: var(--red);
-}
-
-.subtitle {
-    margin-top: 30px;
-    font-size: 20px;
-    line-height: 1.5;
-    color: var(--gray);
-}
-
-.calculator-card {
-    background: var(--white);
-    border: 4px solid var(--black);
-    box-shadow: 12px 12px 0 var(--black);
-    max-width: 500px;
-    margin: 45px auto 25px;
-    padding: 35px;
-}
-
-.card-icon {
-    font-size: 55px;
-    margin-bottom: 15px;
-}
-
-.calculator-card h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-}
-
-.calculator-card p {
-    color: var(--gray);
-    line-height: 1.6;
-}
-
-.primary-btn {
-    margin-top: 25px;
-    width: 100%;
-    padding: 18px;
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.15s ease;
-}
-
-.primary-btn:hover {
-    background: var(--red);
-    transform: translateY(-3px);
-}
-
-.disclaimer {
-    color: var(--gray);
-    font-size: 12px;
-}
-
-
-/* QUIZ */
-
-.quiz-header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-#questionNumber {
-    font-size: 35px;
-}
-
-#progressText {
-    color: var(--gray);
-    align-self: center;
-}
-
-.progress-bar,
-.fake-progress {
-    width: 100%;
-    height: 10px;
-    background: #d6d1c7;
-    margin-bottom: 50px;
+    box-shadow: var(--shadow-hard-lg);
+    position: relative;
     overflow: hidden;
 }
 
-#progress,
-#fakeProgress {
-    height: 100%;
-    width: 20%;
-    background: var(--black);
-    transition: width 0.4s ease;
-}
-
-.question-card {
-    background: var(--white);
-    border: 4px solid var(--black);
-    padding: 50px;
-    box-shadow: 12px 12px 0 var(--black);
-}
-
-.question-category {
-    font-size: 12px;
-    font-weight: bold;
-    color: var(--red);
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-}
-
-.question-card h2 {
-    font-size: clamp(30px, 5vw, 50px);
-    margin-bottom: 40px;
-}
-
-.answers {
-    display: grid;
-    gap: 14px;
-}
-
-.answer-btn {
-    padding: 18px;
-    border: 3px solid var(--black);
-    background: var(--white);
-    text-align: left;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.15s ease;
-}
-
-.answer-btn:hover {
-    background: var(--yellow);
-    transform: translateX(6px);
-}
-
-
-/* CALCULATING */
-
-.loading-icon {
-    font-size: 80px;
-    animation: bounce 0.8s infinite alternate;
-}
-
-@keyframes bounce {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-20px);
-    }
-}
-
-#calculating h2 {
-    font-size: 45px;
-    margin: 25px 0;
-}
-
-.terminal {
-    background: var(--black);
-    color: #00ff66;
-    padding: 25px;
-    max-width: 600px;
-    margin: auto;
-    text-align: left;
-    font-family: monospace;
-    min-height: 60px;
-}
-
-.fake-progress {
-    max-width: 600px;
-    margin: 25px auto;
-}
-
-#fakeProgress {
-    width: 0%;
-    background: var(--red);
-}
-
-
-/* RESULT */
-
-.result-card {
-    background: var(--white);
-    border: 4px solid var(--black);
-    padding: 50px;
-    box-shadow: 15px 15px 0 var(--black);
-}
-
-.result-label {
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 3px;
-    color: var(--gray);
-}
-
-.amount {
-    font-size: clamp(55px, 12vw, 120px);
-    font-weight: 900;
-    margin: 20px 0;
-    color: var(--red);
-}
-
-.result-subtitle {
-    color: var(--gray);
-    font-size: 18px;
-}
-
-.result-details {
-    margin: 30px auto;
-    max-width: 450px;
-    text-align: left;
-}
-
-.detail {
-    padding: 12px 0;
-    border-bottom: 2px solid #ddd;
+/* --- 4. VIEW SECTIONS & TRANSITIONS --- */
+.view {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 3.2vw, 24px);
+    width: 100%;
 }
 
+.hidden {
+    display: none !important;
+}
 
-/* REVEAL */
+/* Punchy, snappy fade-and-pop transition */
+.fade-in {
+    animation: punchyPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-#reveal {
-    background: var(--black);
-    color: var(--white);
-    min-height: 90vh;
-    padding: 50px 30px;
+@keyframes punchyPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.97) translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* --- 5. CHUNKY TYPOGRAPHY HIERARCHY --- */
+
+/* Major Branding / Giant Headings */
+.heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 5.5vw, 2.75rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+    word-break: break-word;
+    text-wrap: balance;
+}
+
+.clickable-brand {
+    cursor: pointer;
+    user-select: none;
+    transition: transform var(--transition-fast);
+}
+
+.clickable-brand:hover {
+    transform: scale(1.02);
+    color: var(--accent-red);
+}
+
+.clickable-brand:active {
+    transform: scale(0.98);
+}
+
+/* Question Headings */
+.question-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 4.2vw, 2rem);
+    line-height: 1.15;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+    word-break: break-word;
+    text-wrap: balance;
+}
+
+/* Subtitle & Microcopy */
+.subtitle {
+    font-size: clamp(1rem, 2.8vw, 1.25rem);
+    font-weight: 800;
+    color: var(--text-muted);
+    line-height: 1.35;
+    max-width: 480px;
+}
+
+.question-microcopy {
+    font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: -8px;
+}
+
+.disclaimer {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* --- 6. CHUNKY BADGES & PROGRESS PILLS --- */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--accent-red-light);
+    color: var(--border-black);
+    border: var(--border-thin);
+    border-radius: var(--radius-badge);
+    padding: 6px 16px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.badge-icon {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.progress-badge {
+    background-color: var(--accent-yellow);
+    color: var(--border-black);
+    border: var(--border-thin);
+    border-radius: var(--radius-badge);
+    padding: 6px 18px;
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-hard-sm);
+}
+
+/* --- 7. CHUNKY OVERSIZED BUTTONS --- */
+
+.button-wrapper {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.btn-primary {
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 28px;
+    background-color: var(--accent-red);
+    color: #ffffff;
+    border: var(--border-thick);
+    border-radius: var(--radius-btn);
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: var(--shadow-hard-md);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    user-select: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-red-hover);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard-lg);
+}
+
+.btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.btn-primary:focus-visible {
+    outline: 4px solid var(--border-black);
+    outline-offset: 3px;
+}
+
+.btn-secondary {
+    width: 100%;
+    min-height: 54px;
+    padding: 14px 24px;
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: var(--border-thick);
+    border-radius: var(--radius-btn);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3vw, 1.15rem);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: var(--shadow-hard-md);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-canvas);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard-lg);
+}
+
+.btn-secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.btn-secondary:focus-visible {
+    outline: 4px solid var(--accent-red);
+    outline-offset: 3px;
+}
+
+/* --- 8. INPUT CONTROLS (AGE INPUT) --- */
+
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.text-input {
+    width: 100%;
+    max-width: 380px;
+    height: 64px;
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    color: var(--text-main);
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    text-align: center;
+    padding: 0 18px;
+    box-shadow: var(--shadow-hard-md);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.text-input:focus {
+    outline: none;
+    border-color: var(--accent-red);
+    box-shadow: var(--shadow-hard-red);
+    transform: translate(-2px, -2px);
+}
+
+.text-input::placeholder {
+    color: #a1a1aa;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.text-input.input-error {
+    border-color: var(--accent-red);
+    background-color: var(--accent-red-light);
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+
+/* --- 9. CHUNKY QUESTIONNAIRE OPTION CARDS --- */
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.option-card {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: clamp(14px, 3.2vw, 18px) clamp(16px, 4vw, 22px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    box-shadow: var(--shadow-hard-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+    width: 100%;
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(0.98rem, 2.6vw, 1.12rem);
+    user-select: none;
+}
+
+.option-card:hover {
+    background-color: var(--bg-canvas-subtle);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard-md);
+}
+
+.option-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px var(--border-black);
+}
+
+.option-card:focus-visible {
+    outline: 3px solid var(--accent-red);
+    outline-offset: 3px;
+}
+
+/* Selected State */
+.option-card.selected {
+    background-color: var(--accent-red-light);
+    border-color: var(--border-black);
+    box-shadow: var(--shadow-hard-md);
+    transform: translate(-2px, -2px);
+}
+
+.option-icon {
+    font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+    flex-shrink: 0;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-#reveal.active {
-    display: flex;
+.option-label {
+    flex: 1;
+    line-height: 1.25;
+    word-break: break-word;
 }
 
-.warning {
-    font-size: 70px;
-    margin-bottom: 20px;
-}
+/* --- 10. ERROR & CONFIRMATION MESSAGES --- */
 
-.small-title {
-    color: var(--yellow);
-    font-weight: bold;
-    letter-spacing: 5px;
-    margin-bottom: 25px;
-}
-
-.reveal-content h1 {
-    font-size: clamp(45px, 8vw, 90px);
-    letter-spacing: -4px;
-}
-
-.reveal-content h1 span {
-    color: var(--red);
-}
-
-.final-message {
-    margin: 45px auto;
-    padding: 30px;
-    max-width: 450px;
-    border: 3px solid var(--white);
-}
-
-.final-message h2 {
-    font-size: 70px;
-    color: var(--yellow);
-}
-
-.final-message p {
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-.legal {
-    color: #aaa;
-    max-width: 600px;
-    margin: auto;
-    line-height: 1.6;
-}
-
-.secondary-btn {
-    margin-top: 30px;
-    padding: 15px 25px;
-    background: var(--white);
-    color: var(--black);
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.secondary-btn:hover {
-    background: var(--yellow);
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .container {
-        padding: 20px;
-    }
-
-    h1 {
-        letter-spacing: -3px;
-    }
-
-    .calculator-card,
-    .question-card,
-    .result-card {
-        padding: 25px;
-        box-shadow: 7px 7px 0 var(--black);
-    }
-
-    .question-card h2 {
-        margin-bottom: 25px;
-    }
-
-    .reveal-content h1 {
-        letter-spacing: -2px;
-    }
-}
-
-/* FIND YOUR OWN WORTH */
-
-.worth-header {
-    margin-bottom: 40px;
-}
-
-.worth-card {
-    background: var(--white);
-    border: 4px solid var(--black);
-    box-shadow: 12px 12px 0 var(--black);
-    max-width: 550px;
-    margin: 0 auto 25px;
-    padding: 40px;
-}
-
-.worth-icon {
-    font-size: 65px;
-    margin-bottom: 20px;
-}
-
-.worth-card h2 {
-    font-size: 32px;
-    margin-bottom: 15px;
-}
-
-.worth-card p {
-    color: var(--gray);
-    line-height: 1.6;
-}
-
-#worthResult .result-card {
-    max-width: 700px;
-    margin: auto;
-}
-
-@media (max-width: 600px) {
-
-    .worth-card {
-        padding: 25px;
-        box-shadow: 7px 7px 0 var(--black);
-    }
-
-}
-.primary-btn {
-    display: block;
-    text-decoration: none;
+.error-msg {
+    color: #991b1b;
+    background-color: var(--accent-red-light);
+    border: var(--border-thin);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    width: 100%;
     text-align: center;
+    box-shadow: var(--shadow-hard-sm);
+    animation: punchyPop 0.18s ease-out;
+}
+
+.confirm-msg {
+    color: #166534;
+    background-color: var(--accent-green);
+    border: var(--border-thin);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-hard-sm);
+    animation: punchyPop 0.18s ease-out;
+}
+
+/* --- 11. LOADING & SEARCHING SPINNER --- */
+
+.spinner {
+    width: 58px;
+    height: 58px;
+    border: 5px solid var(--bg-canvas-subtle);
+    border-top: 5px solid var(--accent-red);
+    border-right: 5px solid var(--border-black);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 18px 0;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- 12. OTHER KID™ RIVAL CARD VIEW --- */
+
+.rival-title {
+    color: var(--accent-red);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.stat-card {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: 14px 16px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.stat-card-wide {
+    grid-column: 1 / -1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 3.2vw, 1.35rem);
+    color: var(--text-main);
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.humor-quote {
+    background-color: var(--accent-yellow);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: 14px 18px;
+    width: 100%;
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.humor-quote p {
+    font-weight: 800;
+    font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+    color: var(--text-main);
+    line-height: 1.35;
+}
+
+/* --- 13. THE COMPARISON™ SCREEN (BOLD INFORMATION BLOCKS) --- */
+
+.comparison-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.comp-item {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow-hard-sm);
+    text-align: left;
+}
+
+.comp-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 2px dashed var(--bg-canvas-subtle);
+    padding-bottom: 8px;
+}
+
+.comp-cat-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+.comp-reaction {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--accent-red);
+    background-color: var(--accent-red-light);
+    border: 1.5px solid var(--border-black);
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.comp-cols {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.comp-col {
+    background-color: var(--bg-canvas);
+    border: var(--border-thin);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.comp-col.comp-rival {
+    background-color: var(--accent-red-light);
+}
+
+.comp-badge {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.rival-badge {
+    color: var(--accent-red);
+}
+
+.comp-data {
+    font-weight: 900;
+    font-size: clamp(0.92rem, 2.4vw, 1.05rem);
+    color: var(--text-main);
+    line-height: 1.25;
+    word-break: break-word;
+}
+
+.comp-vs {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--border-black);
+    background-color: var(--accent-yellow);
+    border: var(--border-thin);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 0px var(--border-black);
+}
+
+.evidence-text {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+/* --- 14. OFFICIAL PARENTAL REPORT™ (FINAL RESULTS SCREEN) --- */
+
+.score-display-card {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-card);
+    padding: clamp(20px, 4vw, 32px) clamp(16px, 3vw, 24px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow-hard-lg);
+}
+
+.score-number-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.9;
+}
+
+/* ABSURDLY MASSIVE FINAL SCORE */
+.score-big-number {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 16vw, 8.5rem);
+    line-height: 0.9;
+    color: var(--accent-red);
+    text-shadow: 4px 4px 0px var(--border-black);
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    user-select: none;
+}
+
+.score-subtext {
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 2.6vw, 1.1rem);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+/* CHUNKY CATEGORY PILL */
+.category-pill {
+    background-color: var(--border-black);
+    color: #ffffff;
+    border: var(--border-thick);
+    border-radius: var(--radius-badge);
+    padding: 10px 24px;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3.5vw, 1.45rem);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-hard-md);
+    margin-top: 4px;
+    max-width: 100%;
+    word-break: break-word;
+}
+
+/* DISAPPOINTMENT METER */
+.meter-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: clamp(0.75rem, 2.2vw, 0.9rem);
+    color: var(--text-main);
+    text-transform: uppercase;
+}
+
+.meter-track {
+    width: 100%;
+    height: 28px;
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-badge);
+    overflow: hidden;
+    box-shadow: var(--shadow-hard-sm);
+    position: relative;
+}
+
+.meter-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-red);
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+    border-right: 3px solid var(--border-black);
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Humorous Verdict Card */
+.verdict-card {
+    background-color: var(--accent-yellow);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: 16px 20px;
+    width: 100%;
+    box-shadow: var(--shadow-hard-md);
+}
+
+.verdict-text {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(1rem, 2.8vw, 1.2rem);
+    color: var(--text-main);
+    line-height: 1.35;
+}
+
+/* Breakdown Card */
+.breakdown-card {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: 18px 20px;
+    width: 100%;
+    text-align: left;
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.breakdown-heading {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 2.8vw, 1.15rem);
+    text-transform: uppercase;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+
+.factors-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.factor-item {
+    background-color: var(--bg-canvas);
+    border: var(--border-thin);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: clamp(0.9rem, 2.4vw, 1rem);
+    color: var(--text-main);
+}
+
+.factor-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.factor-text {
+    flex: 1;
+    line-height: 1.25;
+}
+
+/* Parental Consensus Banner */
+.parent-reaction-banner {
+    background-color: var(--accent-red-light);
+    border: var(--border-thick);
+    border-radius: var(--radius-input);
+    padding: 14px 18px;
+    width: 100%;
+    box-shadow: var(--shadow-hard-sm);
+    text-align: left;
+}
+
+.reaction-tag {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.reaction-quote {
+    font-weight: 800;
+    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+/* Action Buttons Grid */
+.results-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 6px;
+}
+
+/* --- 15. TOAST NOTIFICATIONS (PARENTAL CHAOS LAYER) --- */
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 90vw;
+    pointer-events: none;
+}
+
+.toast {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    box-shadow: var(--shadow-hard-md);
+    pointer-events: auto;
+    animation: toastSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-fade-out {
+    animation: toastSlideOut 0.35s ease-out forwards;
+}
+
+@keyframes toastSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toastSlideOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-15px) scale(0.9);
+    }
+}
+
+/* --- 16. EASTER EGG MODAL --- */
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(14, 14, 16, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 16px;
+}
+
+.modal-card {
+    background-color: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: var(--radius-card);
+    padding: clamp(24px, 5vw, 36px);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-hard-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    animation: punchyPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.easter-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 4vw, 1.85rem);
+    text-transform: uppercase;
+    color: var(--text-main);
+    line-height: 1.15;
+}
+
+.easter-text {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.easter-subtext {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.modal-close-btn {
+    margin-top: 6px;
+}
+
+/* --- 17. SITE FOOTER --- */
+
+.site-footer {
+    margin-top: clamp(24px, 4vw, 36px);
+    padding-top: 18px;
+    border-top: var(--border-thick);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.footer-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: var(--text-main);
+}
+
+.footer-tagline {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.footer-copy {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+/* --- 18. RESPONSIVE BREAKPOINTS (320px to Desktop) --- */
+
+@media (min-width: 480px) {
+    .results-actions {
+        flex-direction: row;
+    }
+    
+    .results-actions .btn-primary,
+    .results-actions .btn-secondary {
+        flex: 1;
+    }
+}
+
+@media (max-width: 375px) {
+    body {
+        padding: 12px 8px;
+    }
+    
+    .card {
+        padding: 22px 14px;
+        border-radius: 16px;
+        box-shadow: var(--shadow-hard-md);
+    }
+    
+    .comp-cols {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    
+    .comp-vs {
+        margin: 2px auto;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .score-big-number {
+        font-size: 4.5rem;
+    }
+    
+    .category-pill {
+        padding: 8px 16px;
+        font-size: 0.95rem;
+    }
+}
+
+/* High Contrast & Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
