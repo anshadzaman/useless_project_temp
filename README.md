@@ -87,17 +87,21 @@ For Software:
 
 # Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
+![Screenshot1](s1)
 
 *The home page where users begin their journey toward discovering how disappointed their parents are.*
 
-![Screenshot2](Add screenshot 2 here with proper name)
+![Screenshot2](s2)
 
 *The questionnaire where users confess their questionable life decisions.*
 
-![Screenshot3](Add screenshot 3 here with proper name)
+![Screenshot3](s3)
 
 *The final Parent Disappointment Report displaying the user's score and parental verdict.*
+
+![Screenshot4](s4)
+
+![Screenshot5](s5)
 
 # Diagrams
 
