@@ -1,276 +1,683 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dowry Calculator™</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Parents Disappointment Calculator™ - Find out how badly you are losing to Sharma Ji's son.">
+    <title>Parents Disappointment Calculator™</title>
+    <!-- Chunky Brutalist Typography from Google Fonts with instant fallbacks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
+    <script src="script.js" defer></script>
 </head>
-
 <body>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <main class="container">
-
-
-        <!-- LANDING PAGE -->
-
-        <section id="landing" class="screen active">
-
+    <!-- Easter Egg Modal -->
+    <div id="easter-egg-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="easter-title">
+        <div class="modal-card">
             <div class="badge">
-                ⚠️ TOTALLY UNOFFICIAL
+                <span class="badge-icon">🏆</span>
+                <span>SECRET UNLOCKED</span>
+            </div>
+            <h3 id="easter-title" class="easter-title">Achievement Unlocked!</h3>
+            <p class="easter-text">You are officially your parents' favourite child.</p>
+            <p class="easter-subtext">(Disclaimer: This certificate is not legally binding in family arguments.)</p>
+            <button id="close-modal-btn" class="btn-primary modal-close-btn" type="button">
+                THANKS MOM & DAD
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Card Container -->
+    <main class="card">
+        
+        <!-- ================= 1. LANDING PAGE VIEW ================= -->
+        <section id="landing-view" class="view">
+            <!-- Small badge at the top -->
+            <div class="badge">
+                <span class="badge-icon">⚠️</span>
+                <span>100% Scientifically Unverified™</span>
             </div>
 
-            <h1>
-                Dowry<br>
-                <span>Calculator™</span>
+            <!-- Main heading (Clickable for Easter Egg) -->
+            <h1 id="main-brand-title" class="heading clickable-brand" title="Click 5 times for a secret...">
+                PARENTS DISAPPOINTMENT CALCULATOR™
             </h1>
 
-            <p class="subtitle">
-                Because apparently marriage needs<br>
-                a financial calculator.
-            </p>
+            <!-- Subtitle -->
+            <p class="subtitle">Find out how badly you are losing to someone else's child.</p>
 
-
-            <!-- DOWRY CALCULATOR CARD -->
-
-            <div class="calculator-card">
-
-                <div class="card-icon">
-                    💍
-                </div>
-
-                <h2>
-                    Calculate Your Worth
-                </h2>
-
-                <p>
-                    Answer a few completely unnecessary questions
-
-                    and discover your
-                    <strong>hypothetical dowry value.</strong>
-                </p>
-
-                <button id="startBtn" class="primary-btn">
-                    CALCULATE →
+            <!-- Large primary button -->
+            <div class="button-wrapper">
+                <button id="start-btn" class="btn-primary" type="button">
+                    START COMPARING
                 </button>
-
             </div>
 
-
-            <!-- FIND YOUR OWN WORTH CARD -->
-
-            <div class="calculator-card">
-
-                <div class="card-icon">
-                    🪞
-                </div>
-
-                <h2>
-                    Calculate Your Own Worth
-                </h2>
-
-                <p>
-                    Answer a few completely unnecessary questions
-                    and discover your
-                    <strong>totally scientific market value.</strong>
-                </p>
-
-               <a href="./worth/index.html" class="primary-btn">
-    CALCULATE YOUR OWN WORTH →
-</a>
-
-            </div>
-
-
+            <!-- Small disclaimer near the bottom -->
             <p class="disclaimer">
-                *These calculators are absolutely not serious.
+                Results are completely fictional. Your parents probably still love you.
+            </p>
+        </section>
+
+        <!-- ================= 2. QUESTION 1 VIEW ================= -->
+        <section id="q1-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 1 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">How old are you?</h2>
+
+            <!-- Numeric Input Area -->
+            <div class="input-group">
+                <input 
+                    type="number" 
+                    id="age-input" 
+                    class="text-input" 
+                    placeholder="Enter your age" 
+                    min="1" 
+                    max="120"
+                    inputmode="numeric"
+                    aria-label="Your Age"
+                />
+                
+                <!-- Friendly error message -->
+                <p id="q1-error" class="error-msg hidden" role="alert">
+                    Come on, even your parents know your age.
+                </p>
+            </div>
+
+            <!-- Next button for Q1 -->
+            <div class="button-wrapper">
+                <button id="q1-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 3. QUESTION 2 VIEW ================= -->
+        <section id="q2-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 2 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">How were your academic results?</h2>
+
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="academics-options" role="radiogroup" aria-label="Academic Results">
+                <button type="button" class="option-card" data-value="🏆 I was the topper" role="radio" aria-checked="false">
+                    <span class="option-icon">🏆</span>
+                    <span class="option-label">I was the topper</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🙂 Pretty decent" role="radio" aria-checked="false">
+                    <span class="option-icon">🙂</span>
+                    <span class="option-label">Pretty decent</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="😐 Just surviving" role="radio" aria-checked="false">
+                    <span class="option-icon">😐</span>
+                    <span class="option-label">Just surviving</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="💀 We don't talk about it" role="radio" aria-checked="false">
+                    <span class="option-icon">💀</span>
+                    <span class="option-label">We don't talk about it</span>
+                </button>
+            </div>
+
+            <!-- Error message for Q2 -->
+            <p id="q2-error" class="error-msg hidden" role="alert">
+                Interesting strategy. But you still need to choose one.
             </p>
 
+            <!-- Next button for Q2 -->
+            <div class="button-wrapper">
+                <button id="q2-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
         </section>
 
+        <!-- ================= 4. QUESTION 3 VIEW ================= -->
+        <section id="q3-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 3 OF 8</div>
 
+            <!-- Main question -->
+            <h2 class="question-title">What's your current career situation?</h2>
 
-        <!-- QUESTION PAGE -->
-
-        <section id="quiz" class="screen">
-
-            <div class="quiz-header">
-
-                <span id="questionNumber">
-                    01
-                </span>
-
-                <span id="progressText">
-                    Question 1 of 5
-                </span>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-                <div id="progress"></div>
-
-            </div>
-
-
-            <div class="question-card">
-
-                <p class="question-category">
-                    PERSONAL INFORMATION
-                </p>
-
-                <h2 id="question">
-                    What is your profession?
-                </h2>
-
-                <div id="answers" class="answers">
-                    <!-- Answers generated by JavaScript -->
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- CALCULATING PAGE -->
-
-        <section id="calculating" class="screen">
-
-            <div class="loading-icon">
-                💰
-            </div>
-
-            <h2>
-                Calculating...
-            </h2>
-
-            <div class="terminal">
-
-                <p id="calculationText">
-                    Initializing Dowry Engine...
-                </p>
-
-            </div>
-
-            <div class="fake-progress">
-
-                <div id="fakeProgress"></div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- RESULT PAGE -->
-
-        <section id="result" class="screen">
-
-            <div class="result-card">
-
-                <p class="result-label">
-                    YOUR CALCULATED DOWRY
-                </p>
-
-                <div id="amount" class="amount">
-                    ₹0
-                </div>
-
-                <p class="result-subtitle">
-
-                    Congratulations. We have successfully
-                    turned marriage into an Excel spreadsheet.
-
-                </p>
-
-                <div id="resultDetails" class="result-details">
-                    <!-- Generated by JS -->
-                </div>
-
-                <button id="revealBtn" class="primary-btn">
-                    WAIT... WHAT? →
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="career-options" role="radiogroup" aria-label="Career Situation">
+                <button type="button" class="option-card" data-value="💼 I'm working" role="radio" aria-checked="false">
+                    <span class="option-icon">💼</span>
+                    <span class="option-label">I'm working</span>
                 </button>
 
-            </div>
-
-        </section>
-
-
-
-        <!-- FINAL REVEAL -->
-
-        <section id="reveal" class="screen">
-
-            <div class="reveal-content">
-
-                <div class="warning">
-                    🚨
-                </div>
-
-                <p class="small-title">
-                    HOLD ON.
-                </p>
-
-                <h1>
-
-                    You just<br>
-
-                    calculated the<br>
-
-                    <span>price of a human being.</span>
-
-                </h1>
-
-
-                <div class="final-message">
-
-                    <h2>
-                        ₹0
-                    </h2>
-
-                    <p>
-                        That's the only acceptable dowry.
-                    </p>
-
-                </div>
-
-
-                <p class="legal">
-
-                    Dowry is illegal in India under the
-                    Dowry Prohibition Act, 1961.
-
-                </p>
-
-
-                <button
-                    onclick="location.reload()"
-                    class="secondary-btn">
-
-                    CALCULATE AGAIN
-
+                <button type="button" class="option-card" data-value="🎓 I'm studying" role="radio" aria-checked="false">
+                    <span class="option-icon">🎓</span>
+                    <span class="option-label">I'm studying</span>
                 </button>
 
+                <button type="button" class="option-card" data-value="🔎 Looking for a job" role="radio" aria-checked="false">
+                    <span class="option-icon">🔎</span>
+                    <span class="option-label">Looking for a job</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🫠 It's complicated" role="radio" aria-checked="false">
+                    <span class="option-icon">🫠</span>
+                    <span class="option-label">It's complicated</span>
+                </button>
             </div>
 
+            <!-- Error message for Q3 -->
+            <p id="q3-error" class="error-msg hidden" role="alert">
+                Your parents would like a career plan. Please select one.
+            </p>
+
+            <!-- Next button for Q3 -->
+            <div class="button-wrapper">
+                <button id="q3-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
         </section>
 
+        <!-- ================= 5. QUESTION 4 VIEW ================= -->
+        <section id="q4-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 4 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">What's your monthly income? 💰</h2>
+            <p class="question-microcopy">Don't worry. Your parents already know.</p>
+
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="income-options" role="radiogroup" aria-label="Monthly Income">
+                <button type="button" class="option-card" data-value="🥲 ₹0 — Currently investing in myself" role="radio" aria-checked="false">
+                    <span class="option-icon">🥲</span>
+                    <span class="option-label">₹0 — Currently investing in myself</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🙂 ₹1–25K" role="radio" aria-checked="false">
+                    <span class="option-icon">🙂</span>
+                    <span class="option-label">₹1–25K</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="😐 ₹25–50K" role="radio" aria-checked="false">
+                    <span class="option-icon">😐</span>
+                    <span class="option-label">₹25–50K</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="😎 ₹50K–1L" role="radio" aria-checked="false">
+                    <span class="option-icon">😎</span>
+                    <span class="option-label">₹50K–1L</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🤑 ₹1L+" role="radio" aria-checked="false">
+                    <span class="option-icon">🤑</span>
+                    <span class="option-label">₹1L+</span>
+                </button>
+            </div>
+
+            <!-- Error message for Q4 -->
+            <p id="q4-error" class="error-msg hidden" role="alert">
+                Your parents have already started calculating your cousin's salary.
+            </p>
+
+            <!-- Next button for Q4 -->
+            <div class="button-wrapper">
+                <button id="q4-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 6. QUESTION 5 VIEW ================= -->
+        <section id="q5-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 5 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">How often do you exercise? 🏋️</h2>
+            <p class="question-microcopy">Walking to the kitchen does not count.</p>
+
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="fitness-options" role="radiogroup" aria-label="Exercise Frequency">
+                <button type="button" class="option-card" data-value="🏆 Every day" role="radio" aria-checked="false">
+                    <span class="option-icon">🏆</span>
+                    <span class="option-label">Every day</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="💪 A few times a week" role="radio" aria-checked="false">
+                    <span class="option-icon">💪</span>
+                    <span class="option-label">A few times a week</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🚶 Occasionally" role="radio" aria-checked="false">
+                    <span class="option-icon">🚶</span>
+                    <span class="option-label">Occasionally</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🛋️ Does walking to the fridge count?" role="radio" aria-checked="false">
+                    <span class="option-icon">🛋️</span>
+                    <span class="option-label">Does walking to the fridge count?</span>
+                </button>
+            </div>
+
+            <!-- Error message for Q5 -->
+            <p id="q5-error" class="error-msg hidden" role="alert">
+                Your parents have concerns about your step count.
+            </p>
+
+            <!-- Next button for Q5 -->
+            <div class="button-wrapper">
+                <button id="q5-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 7. QUESTION 6 VIEW ================= -->
+        <section id="q6-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 6 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">How many useful skills do you have? 🧠</h2>
+            <p class="question-microcopy">Watching tutorials at 2× speed is not a skill.</p>
+
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="skills-options" role="radiogroup" aria-label="Useful Skills">
+                <button type="button" class="option-card" data-value="🥲 0–1" role="radio" aria-checked="false">
+                    <span class="option-icon">🥲</span>
+                    <span class="option-label">0–1</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🙂 2–3" role="radio" aria-checked="false">
+                    <span class="option-icon">🙂</span>
+                    <span class="option-label">2–3</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="😎 4–5" role="radio" aria-checked="false">
+                    <span class="option-icon">😎</span>
+                    <span class="option-label">4–5</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🧑💻 Too many to count" role="radio" aria-checked="false">
+                    <span class="option-icon">🧑💻</span>
+                    <span class="option-label">Too many to count</span>
+                </button>
+            </div>
+
+            <!-- Error message for Q6 -->
+            <p id="q6-error" class="error-msg hidden" role="alert">
+                Your parents have requested evidence of these skills.
+            </p>
+
+            <!-- Next button for Q6 -->
+            <div class="button-wrapper">
+                <button id="q6-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 8. QUESTION 7 VIEW ================= -->
+        <section id="q7-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 7 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">How much do you help around the house? 🧹</h2>
+
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="household-options" role="radiogroup" aria-label="Household Help">
+                <button type="button" class="option-card" data-value="👑 I basically run the house" role="radio" aria-checked="false">
+                    <span class="option-icon">👑</span>
+                    <span class="option-label">I basically run the house</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🙂 Sometimes" role="radio" aria-checked="false">
+                    <span class="option-icon">🙂</span>
+                    <span class="option-label">Sometimes</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="😐 When asked" role="radio" aria-checked="false">
+                    <span class="option-icon">😐</span>
+                    <span class="option-label">When asked</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="💀 I am the reason Mom is asking" role="radio" aria-checked="false">
+                    <span class="option-icon">💀</span>
+                    <span class="option-label">I am the reason Mom is asking</span>
+                </button>
+            </div>
+
+            <!-- Error message for Q7 -->
+            <p id="q7-error" class="error-msg hidden" role="alert">
+                Mom has requested that you reconsider your contribution to society.
+            </p>
+
+            <!-- Next button for Q7 -->
+            <div class="button-wrapper">
+                <button id="q7-next-btn" class="btn-primary" type="button">
+                    NEXT
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 9. QUESTION 8 VIEW ================= -->
+        <section id="q8-view" class="view hidden">
+            <!-- Progress indicator -->
+            <div class="progress-badge">QUESTION 8 OF 8</div>
+
+            <!-- Main question -->
+            <h2 class="question-title">What's your relationship status? 💍</h2>
+            <p class="question-microcopy">This question has caused more family meetings than taxes.</p>
+
+            <!-- Selectable Option Cards -->
+            <div class="options-container" id="relationship-options" role="radiogroup" aria-label="Relationship Status">
+                <button type="button" class="option-card" data-value="💍 Married" role="radio" aria-checked="false">
+                    <span class="option-icon">💍</span>
+                    <span class="option-label">Married</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="💒 Engaged" role="radio" aria-checked="false">
+                    <span class="option-icon">💒</span>
+                    <span class="option-label">Engaged</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="❤️ Dating" role="radio" aria-checked="false">
+                    <span class="option-icon">❤️</span>
+                    <span class="option-label">Dating</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="🧍 Single" role="radio" aria-checked="false">
+                    <span class="option-icon">🧍</span>
+                    <span class="option-label">Single</span>
+                </button>
+
+                <button type="button" class="option-card" data-value="😭 Why does everyone keep asking?" role="radio" aria-checked="false">
+                    <span class="option-icon">😭</span>
+                    <span class="option-label">Why does everyone keep asking?</span>
+                </button>
+            </div>
+
+            <!-- Error message for Q8 -->
+            <p id="q8-error" class="error-msg hidden" role="alert">
+                Your relatives would like an answer.
+            </p>
+
+            <!-- Calculate Button -->
+            <div class="button-wrapper">
+                <button id="calculate-btn" class="btn-primary" type="button">
+                    CALCULATE MY DISAPPOINTMENT
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 10. LOADING / SEARCHING VIEW ================= -->
+        <section id="loading-view" class="view hidden" aria-live="polite">
+            <div class="badge">
+                <span class="badge-icon">🔍</span>
+                <span>SCANNING NEIGHBORHOOD</span>
+            </div>
+
+            <h2 class="question-title">Finding someone to compare you with...</h2>
+            
+            <div class="spinner" aria-hidden="true"></div>
+        </section>
+
+        <!-- ================= 11. OTHER KID™ COMPARISON VIEW ================= -->
+        <section id="other-kid-view" class="view hidden">
+            <!-- Top badge -->
+            <div class="badge">
+                <span class="badge-icon">⭐</span>
+                <span>OTHER KID™ DETECTED</span>
+            </div>
+
+            <!-- Fictional Character Name -->
+            <h2 id="rival-name" class="heading rival-title">Sharma Ji's Son™</h2>
+
+            <!-- Exaggerated Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">🎂 Age</span>
+                    <span id="rival-age" class="stat-value">22</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">📚 Academics</span>
+                    <span id="rival-academics" class="stat-value">98.4%</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">💰 Monthly Income</span>
+                    <span id="rival-income" class="stat-value">₹2.5L</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">🏋️ Exercise</span>
+                    <span id="rival-exercise" class="stat-value">6 days/week</span>
+                </div>
+                <div class="stat-card stat-card-wide">
+                    <span class="stat-label">🧠 Useful Skills</span>
+                    <span id="rival-skills" class="stat-value">17 certified skills</span>
+                </div>
+            </div>
+
+            <!-- Humorous Commentary Box -->
+            <div class="humor-quote">
+                <p id="rival-quote">“He wakes up at 5 AM. Nobody knows why.”</p>
+            </div>
+
+            <!-- Compare Us Action Button -->
+            <div class="button-wrapper">
+                <button id="compare-btn" class="btn-primary" type="button">
+                    COMPARE US
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 12. THE COMPARISON™ SCREEN ================= -->
+        <section id="comparison-view" class="view hidden">
+            <!-- Top badge -->
+            <div class="badge">
+                <span class="badge-icon">⚖️</span>
+                <span>HEAD-TO-HEAD BATTLE</span>
+            </div>
+
+            <!-- Main Heading -->
+            <h2 class="heading">THE COMPARISON™</h2>
+
+            <!-- Comparison Cards List -->
+            <div class="comparison-list">
+                
+                <!-- Category 1: Age -->
+                <div class="comp-item">
+                    <div class="comp-item-header">
+                        <span class="comp-cat-title">🎂 AGE</span>
+                        <span id="react-age" class="comp-reaction">⏳ Time is ticking.</span>
+                    </div>
+                    <div class="comp-cols">
+                        <div class="comp-col comp-you">
+                            <span class="comp-badge">YOU</span>
+                            <span id="comp-you-age" class="comp-data">24</span>
+                        </div>
+                        <div class="comp-vs">VS</div>
+                        <div class="comp-col comp-rival">
+                            <span id="comp-rival-badge-age" class="comp-badge rival-badge">SHARMA JI'S SON™</span>
+                            <span id="comp-rival-age" class="comp-data">22</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 2: Academic Performance -->
+                <div class="comp-item">
+                    <div class="comp-item-header">
+                        <span class="comp-cat-title">📚 ACADEMIC PERFORMANCE</span>
+                        <span id="react-academics" class="comp-reaction">😬 Not looking good.</span>
+                    </div>
+                    <div class="comp-cols">
+                        <div class="comp-col comp-you">
+                            <span class="comp-badge">YOU</span>
+                            <span id="comp-you-academics" class="comp-data">🙂 Pretty decent</span>
+                        </div>
+                        <div class="comp-vs">VS</div>
+                        <div class="comp-col comp-rival">
+                            <span id="comp-rival-badge-academics" class="comp-badge rival-badge">SHARMA JI'S SON™</span>
+                            <span id="comp-rival-academics" class="comp-data">98.5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 3: Monthly Income -->
+                <div class="comp-item">
+                    <div class="comp-item-header">
+                        <span class="comp-cat-title">💰 MONTHLY INCOME</span>
+                        <span id="react-income" class="comp-reaction">💸 Your parents felt that.</span>
+                    </div>
+                    <div class="comp-cols">
+                        <div class="comp-col comp-you">
+                            <span class="comp-badge">YOU</span>
+                            <span id="comp-you-income" class="comp-data">😎 ₹50K–1L</span>
+                        </div>
+                        <div class="comp-vs">VS</div>
+                        <div class="comp-col comp-rival">
+                            <span id="comp-rival-badge-income" class="comp-badge rival-badge">SHARMA JI'S SON™</span>
+                            <span id="comp-rival-income" class="comp-data">₹2.5L</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 4: Exercise -->
+                <div class="comp-item">
+                    <div class="comp-item-header">
+                        <span class="comp-cat-title">🏋️ EXERCISE</span>
+                        <span id="react-exercise" class="comp-reaction">🏋️ Your parents have noticed.</span>
+                    </div>
+                    <div class="comp-cols">
+                        <div class="comp-col comp-you">
+                            <span class="comp-badge">YOU</span>
+                            <span id="comp-you-fitness" class="comp-data">🚶 Occasionally</span>
+                        </div>
+                        <div class="comp-vs">VS</div>
+                        <div class="comp-col comp-rival">
+                            <span id="comp-rival-badge-exercise" class="comp-badge rival-badge">SHARMA JI'S SON™</span>
+                            <span id="comp-rival-exercise" class="comp-data">6 days/week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 5: Number of Skills -->
+                <div class="comp-item">
+                    <div class="comp-item-header">
+                        <span class="comp-cat-title">🧠 USEFUL SKILLS</span>
+                        <span id="react-skills" class="comp-reaction">🧠 The resume gap is alarming.</span>
+                    </div>
+                    <div class="comp-cols">
+                        <div class="comp-col comp-you">
+                            <span class="comp-badge">YOU</span>
+                            <span id="comp-you-skills" class="comp-data">🙂 2–3</span>
+                        </div>
+                        <div class="comp-vs">VS</div>
+                        <div class="comp-col comp-rival">
+                            <span id="comp-rival-badge-skills" class="comp-badge rival-badge">SHARMA JI'S SON™</span>
+                            <span id="comp-rival-skills" class="comp-data">17 certified skills</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Evidence Statement -->
+            <p class="evidence-text">Your parents have reviewed the evidence.</p>
+
+            <!-- Reveal Score Button -->
+            <div class="button-wrapper">
+                <button id="reveal-btn" class="btn-primary" type="button">
+                    REVEAL MY SCORE
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 13. OFFICIAL PARENTAL REPORT™ (FINAL RESULTS) ================= -->
+        <section id="results-view" class="view hidden">
+            <!-- Top badge -->
+            <div class="badge">
+                <span class="badge-icon">📜</span>
+                <span>OFFICIAL PARENTAL REPORT™</span>
+            </div>
+
+            <!-- Big Score & Category Card -->
+            <div class="score-display-card">
+                <div class="score-number-wrapper">
+                    <span id="final-score-number" class="score-big-number">0%</span>
+                    <span class="score-subtext">DISAPPOINTMENT LEVEL</span>
+                </div>
+
+                <div id="final-score-category" class="category-pill">
+                    PARENTS ARE CONCERNED
+                </div>
+            </div>
+
+            <!-- Disappointment Meter / Progress Bar -->
+            <div class="meter-box">
+                <div class="meter-labels">
+                    <span>😇 PROUD (0%)</span>
+                    <span>💀 DAMAGE (100%)</span>
+                </div>
+                <div class="meter-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div id="meter-fill" class="meter-fill"></div>
+                </div>
+            </div>
+
+            <!-- Humorous Verdict / Explanation -->
+            <div class="verdict-card">
+                <p id="final-explanation" class="verdict-text">
+                    “Calculating verdict...”
+                </p>
+            </div>
+
+            <!-- WHY YOUR PARENTS ARE CONCERNED Breakdown Section -->
+            <div class="breakdown-card">
+                <h3 class="breakdown-heading">⚠️ WHY YOUR PARENTS ARE CONCERNED</h3>
+                <div id="factors-list" class="factors-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Humorous Parent Reaction Banner -->
+            <div class="parent-reaction-banner">
+                <span class="reaction-tag">📢 PARENTAL CONSENSUS:</span>
+                <p id="parent-reaction-text" class="reaction-quote">
+                    “Please prepare for a family discussion.”
+                </p>
+            </div>
+
+            <!-- Share Feedback Alert -->
+            <p id="share-feedback" class="confirm-msg hidden" role="status"></p>
+
+            <!-- Action Buttons: Share & Try Again -->
+            <div class="results-actions">
+                <button id="share-btn" class="btn-primary" type="button">
+                    SHARE MY DISAPPOINTMENT
+                </button>
+                <button id="try-again-btn" class="btn-secondary" type="button">
+                    🔄 TRY AGAIN
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="site-footer">
+            <p class="footer-title">Parents Disappointment Calculator™</p>
+            <p class="footer-tagline">Powered by unnecessary comparison.</p>
+            <p class="footer-copy">© 2026 Nobody Asked For This</p>
+        </footer>
 
     </main>
-
-
-    <script src="script.js"></script>
-
 </body>
-
 </html>
-
