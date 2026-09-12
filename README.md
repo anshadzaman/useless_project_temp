@@ -9,7 +9,7 @@
 ### Team Members
 
 * Team Lead: Adithya Dev - TKM College of Engineering
-* Member 2: Anshad Zaman - TKM College of Engineering
+* Member 2: Anshad Zaman A P - TKM College of Engineering
 
 ### Project Description
 
