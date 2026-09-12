@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parents' Disappointment Calculator™</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <!-- =========================
+         LANDING PAGE
+    ========================== -->
+
+    <section id="landing" class="screen active">
+
+        <div class="badge">
+            ⚠️ TOTALLY UNOFFICIAL
+        </div>
+
+        <h1>
+            Parents'<br>
+            <span>Disappointment™</span>
+        </h1>
+
+        <p class="subtitle">
+            Because apparently your life choices<br>
+            need a performance review.
+        </p>
+
+        <div class="calculator-card">
+
+            <div class="card-icon">
+                👨‍👩‍👧‍👦
+            </div>
+
+            <h2>
+                Calculate Your Disappointment
+            </h2>
+
+            <p>
+                Answer some completely unnecessary questions
+                and discover your totally scientific
+                parental disappointment score.
+            </p>
+
+            <button id="startBtn" class="primary-btn">
+                CALCULATE →
+            </button>
+
+        </div>
+
+        <p class="disclaimer">
+            *No parents were consulted during this calculation.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         QUIZ PAGE
+    ========================== -->
+
+    <section id="quiz" class="screen">
+
+        <div class="quiz-header">
+
+            <span id="questionNumber">
+                01
+            </span>
+
+            <span id="progressText">
+                Question 1 of 10
+            </span>
+
+        </div>
+
+        <div class="progress-bar">
+
+            <div id="progress"></div>
+
+        </div>
+
+        <div class="question-card">
+
+            <p id="questionCategory" class="question-category">
+                EDUCATION DEPARTMENT
+            </p>
+
+            <h2 id="question">
+                Loading question...
+            </h2>
+
+            <div id="answers" class="answers"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CALCULATING PAGE
+    ========================== -->
+
+    <section id="calculating" class="screen">
+
+        <div class="loading-icon">
+            📊
+        </div>
+
+        <h2>
+            Calculating...
+        </h2>
+
+        <div class="terminal">
+
+            <p id="calculationText">
+                Opening Parent Evaluation System...
+            </p>
+
+        </div>
+
+        <div class="fake-progress">
+
+            <div id="fakeProgress"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RESULT PAGE
+    ========================== -->
+
+    <section id="result" class="screen">
+
+        <div class="result-card">
+
+            <p class="result-label">
+                YOUR PARENTAL DISAPPOINTMENT
+            </p>
+
+            <div id="percentage" class="amount">
+                0%
+            </div>
+
+            <h2 id="status">
+                STATUS
+            </h2>
+
+            <p id="resultSubtitle" class="result-subtitle">
+                Please remain calm.
+            </p>
+
+
+            <!-- CATEGORY SCORES -->
+
+            <div class="section-title">
+                PARENTAL PERFORMANCE REPORT
+            </div>
+
+            <div id="categoryScores" class="category-scores"></div>
+
+
+            <!-- SHARMA JI -->
+
+            <div class="comparison">
+
+                <h3>
+                    🏆 SHARMA JI'S SON COMPARISON
+                </h3>
+
+                <div class="comparison-row">
+
+                    <span>
+                        YOU
+                    </span>
+
+                    <div class="comparison-bar">
+                        <div id="yourBar"></div>
+                    </div>
+
+                    <strong id="yourScore">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="comparison-row">
+
+                    <span>
+                        SHARMA JI
+                    </span>
+
+                    <div class="comparison-bar">
+                        <div id="sharmaBar"></div>
+                    </div>
+
+                    <strong id="sharmaScore">
+                        100%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- PARENT REACTION -->
+
+            <div class="quote">
+
+                <span>
+                    ESTIMATED PARENTAL RESPONSE
+                </span>
+
+                <strong id="parentQuote">
+                    "Hmm..."
+                </strong>
+
+            </div>
+
+
+            <!-- ACHIEVEMENTS -->
+
+            <div class="section-title">
+                ACHIEVEMENTS UNLOCKED
+            </div>
+
+            <div id="achievements" class="achievements"></div>
+
+
+            <!-- COMPLAINT -->
+
+            <button id="complaintBtn" class="secondary-btn">
+                📄 GENERATE PARENTAL COMPLAINT
+            </button>
+
+            <div id="complaint" class="complaint"></div>
+
+
+            <!-- EXCUSE -->
+
+            <button id="excuseBtn" class="secondary-btn">
+                🧑‍💻 GENERATE EXCUSE
+            </button>
+
+            <div id="excuse" class="excuse"></div>
+
+
+            <button id="againBtn" class="primary-btn">
+                CALCULATE AGAIN →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FINAL REVEAL
+    ========================== -->
+
+    <section id="final" class="screen">
+
+        <div class="final-content">
+
+            <div class="warning">
+                🚨
+            </div>
+
+            <p class="small-title">
+                IMPORTANT NOTICE
+            </p>
+
+            <h1>
+                You're not actually<br>
+                <span>a disappointment.</span>
+            </h1>
+
+            <div class="final-message">
+
+                <h2>
+                    100%
+                </h2>
+
+                <p>
+                    Your parents just have very
+                    ambitious expectations.
+                </p>
+
+            </div>
+
+            <p class="legal">
+                Your grades, salary, career, appearance,
+                or achievements don't determine your worth.
+            </p>
+
+            <button
+                id="restartBtn"
+                class="secondary-btn">
+
+                CALCULATE AGAIN
+
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
